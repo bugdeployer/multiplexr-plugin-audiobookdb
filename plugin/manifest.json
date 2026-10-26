@@ -1,6 +1,6 @@
 {
   "id": "com.bugdeployer.audiobookdb",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "AudiobookDB metadata",
   "entry": "plugin.js",
   "protocol": {
@@ -9,7 +9,9 @@
   },
   "capabilities": {
     "required": [
-      "ui.present",
+      "metadata.provide",
+      "http.request",
+      "credentials.use",
       "settings.read",
       "settings.write"
     ],
@@ -17,29 +19,31 @@
   },
   "contributions": [
     {
-      "id": "com.bugdeployer.audiobookdb:open",
-      "family": "ui.destination",
-      "title": "Open plugin",
-      "handler": "plugin.open"
+      "id": "com.bugdeployer.audiobookdb:metadata",
+      "family": "metadata.provider",
+      "title": "AudiobookDB",
+      "handler": "metadata.search",
+      "kinds": [
+        "audiobook"
+      ]
     },
     {
-      "id": "com.bugdeployer.audiobookdb:settings",
+      "id": "com.bugdeployer.audiobookdb:access",
       "family": "settings.section",
-      "title": "Plugin settings",
-      "description": "Choose the message shown by the plugin.",
-      "icon": "extension",
+      "title": "Integration access",
+      "description": "AudiobookDB requires a written agreement for public integrations. Enable only when this use is covered.",
+      "icon": "settings",
       "schemaVersion": 1,
       "scopes": [
         "app"
       ],
       "fields": [
         {
-          "id": "com.bugdeployer.audiobookdb:greeting",
-          "type": "text",
-          "label": "Message",
-          "accessibleLabel": "Plugin message",
-          "maxLength": 200,
-          "default": "Hello from your plugin.",
+          "id": "com.bugdeployer.audiobookdb:integrationApproved",
+          "type": "boolean",
+          "label": "Written integration approval obtained",
+          "accessibleLabel": "Written integration approval obtained",
+          "default": false,
           "scopes": [
             "app"
           ]
